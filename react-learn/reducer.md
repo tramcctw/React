@@ -20,4 +20,5 @@ Reducer 用于改变数据的函数
         2. 不能有异步
         3. 不能对外部环境造成影响
 6. 由于在大型项目中，操作比较复杂，数据结构也比较复杂，因此要对reducer进行细分
-    
+ 1. redux提供了方法，可以帮助我们更方便的合并reducer
+ 2. combineReducers：合并reducer,得到一个新的reducer，该新的reducer管理一个对象，该对象的每一个属性交给对应的reducer管理。  
