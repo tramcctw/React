@@ -5,7 +5,6 @@ import * as loginUser from './action/loginUserAction'
 import * as users from './action/usersAction'
 import reducer from './reducer'
 
- 
 
 const store = createStore(reducer)      // 此时会调用reducer
 //创建一个仓库,第一位表示是处理器,第二位表示初始状态值
@@ -17,7 +16,17 @@ const store = createStore(reducer)      // 此时会调用reducer
 //得到一个新对象，新对象中的属性名与第一个参数的属性名一致
 // const boundActions = bindActionCreators(numberActions,store.dispatch)
 
-console.log(store.getState());
+
+const unListen =  store.subscribe(()=>{
+    console.log('状态变化');
+    console.log(store.getState());
+})
+
+
+store.subscribe(()=>{
+    console.log('状态变化2');
+})
+// 注册监听器，当分发action后会依次运行
 
 
 store.dispatch(loginUser.setLoginUser({
@@ -26,11 +35,8 @@ store.dispatch(loginUser.setLoginUser({
         age:10
 }))
 
-// store.dispatch(loginUser.setLoginUser({
-//     id:4,
-//     name:'lisi',
-//     age:11
-// }))
+unListen()
+// 取消监听
 
 store.dispatch(users.addUser({
     id:3,
@@ -44,6 +50,7 @@ store.dispatch(users.addUser({
     age:10
 }))
 
+
 store.dispatch(users.deleteUser(3))
 
 store.dispatch(users.updateUser(1,{
@@ -51,7 +58,6 @@ store.dispatch(users.updateUser(1,{
     name:'twc'
 }))
 
-console.log(store.getState());
 
 //等价于
 // boundActions.getIncreaseAction()    //调用，并直接dispatch
