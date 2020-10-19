@@ -1,7 +1,8 @@
 import React from 'react'
 
-export default function  withLog(Comp,str) {
-    return class withLog extends React.Component{
+export default function  withLog(Comp) {
+
+    class WithLogWrapper extends React.Component{
         componentDidMount(){
             console.log(`日志${Comp.name}被创建。。。`);
         }
@@ -10,14 +11,20 @@ export default function  withLog(Comp,str) {
             console.log(`日志${Comp.name}被销毁。。。`);
         }
 
+
         render(){
+
+            const {abc,...rest} = this.props
             return (
                 <>
-                    <h1>{str}</h1>
-                    <Comp {...this.props}/>
+                    <Comp ref={abc}  {...rest}/>
                 </>
     
             )
         }
     }
+
+    return React.forwardRef((props,ref)=>{
+        return <WithLogWrapper {...props} abc={ref}/>
+    })
 }
