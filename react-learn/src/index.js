@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Comp from './components/Comp'
+// import NewComp from './components/NewComp'
+import Transmit from './components/Transmit'
 
 
-ReactDOM.render( <Comp/>,document.getElementById("#root"))
+ReactDOM.render( <Transmit/>,document.getElementById("root"))
