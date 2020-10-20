@@ -3,5 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "tramcctw <tramcctw@foxmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "react-redux": "^7.2.1"
+  }
 }
