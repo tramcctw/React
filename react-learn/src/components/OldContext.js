@@ -4,14 +4,20 @@ import PropTypes from 'prop-types'
 
 B.contextTypes = {
     a:PropTypes.number,
-    b:PropTypes.string
+    b:PropTypes.string,
+    change:PropTypes.func
 }
 
 export function B(props,context){
-    console.log(context);
+    // 就近找
+    console.log('我是B组件',context.a);
 
     return(
-        <div>hello</div>
+        <>
+            <div>B组件a:{context.a}</div>
+            <button onClick={()=>{context.change(context.a+2)}}>B组件：a+2</button>
+        </>
+
     )
 }
 
@@ -25,6 +31,17 @@ export class A extends Component{
         change:PropTypes.func
     }
 
+
+    static childContextTypes = {
+        a:PropTypes.number
+    }
+
+    getChildContext(){
+        return {
+            a:456
+        }
+    }
+
     constructor(props,context){
         super(props,context)
         console.log(this.context);
@@ -34,8 +51,8 @@ export class A extends Component{
         return(
             <>
                 <B/>
-                <div>a:{this.context.a}</div>
-                <button onClick={()=>{this.context.change()}}>child a+1</button>
+                <div>A组件:{this.context.a}</div>
+                <button onClick={()=>{this.context.change(this.context.a + 2)}}>child a+2</button>
             </>
         )
     }
@@ -66,9 +83,9 @@ export default class OldContext extends Component {
         return {
             a:this.state.a,
             b:this.state.b,
-            change:()=>{
+            change:(newValue)=>{
                 this.setState({
-                    a:this.state.a + 1
+                    a:newValue
                 })
             }
         }
@@ -76,7 +93,7 @@ export default class OldContext extends Component {
 
     // constructor(props,context){
     //     super(props,context)
-    //     // 本组件获取不到？
+    //     // 本组件获取不到
     //     // console.log(this.context);
     // }
     

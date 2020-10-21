@@ -1,11 +1,12 @@
 import React from 'react'
-import OldContext from './components/OldContext'
+// import OldContext from './components/OldContext'
+import NewContext from './components/NewContext'
 
 export default function App(){
     
 
 
     return (
-        <OldContext></OldContext>
+        <NewContext></NewContext>
     )
 }
