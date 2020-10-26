@@ -8,9 +8,7 @@ function B(props){
     return (
         <div>
             <ctx.Consumer>
-                {context=>{
-                    return console.log(context);
-                }}
+                {context=>console.log(context)}
             </ctx.Consumer>
             <h2>我是B组件</h2>
         </div>
