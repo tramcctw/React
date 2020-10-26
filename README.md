@@ -53,3 +53,9 @@ React中的上下文特点
 **注意细节**
 如果，上下文提供者（Context.Provider）中的value属性发生变化（地址不一样），会导致该上下文提供的所有后代元素全部重新渲染，无论该子元素是否优化（无论shouldComponentUpdate函数返回什么结果（绕过））
 value赋值state，而this.setState({})状态没有发生变化，但是state的地址发生了不变化，就会重新render，使用Object.is比较
+
+
+
+
+# 上下文的应用场景
+编写一套组件（有多个组件），这些组件之间需要相互配合才能完成功能
