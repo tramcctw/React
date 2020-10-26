@@ -1,5 +1,5 @@
 import React from 'react'
 
-const ctx = React.createContext
+const ctx = React.createContext()
 
 export default ctx
