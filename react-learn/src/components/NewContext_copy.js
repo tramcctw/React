@@ -5,6 +5,7 @@ const ctx = React.createContext()
 
 
 function B(props){
+    console.log(props);
     return (
         <div>
             <ctx.Consumer>
@@ -23,7 +24,7 @@ class A extends Component {
     render() {
         return (
             <div>
-                <B/>
+                <B val='hello'>wo shi wwww</B>
                 A组件a：{this.context.a},
                 A组件b：{this.context.b}
                 <button onClick={()=>{
