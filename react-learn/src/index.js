@@ -8,3 +8,11 @@ ReactDOM.render(<App/>,
   document.getElementById('root')
 );
 
+document.addEventListener('click',function(e){
+  console.log('阻止剩余事件执行')
+  e.stopImmediatePropagation()
+})
+
+document.addEventListener('click',function(e){
+  console.log('okkk')
+})
