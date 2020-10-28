@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
-import MoveDiv from './components/MoveDiv'
-import MoveCounter from './components/MoveCounter'
-import withListener from './components/withListener'
-
-const WithMove = withListener(MoveDiv)
-const WithCounter = withListener(MoveCounter)
-
+import Portals from './components/portals/Portals'
 class App extends Component {
     render() {
         return (
             <>
-                <WithMove/>
-                <WithCounter/>   
+             <Portals/>
             </>
         );
     }

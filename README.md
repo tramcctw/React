@@ -1,9 +1,9 @@
-# render props
+# Portals
 
-有时候，某些组件的各种功能及其处理逻辑几乎完全相同，只是显示的界面不同
+插槽：将一个 React 元素渲染到指定的 DOM 容器中
 
-1. render props
-   - 传递函数，子组件通过 children() 传回需要的参数
-   - 注意纯组件的属性(尽量避免每次传递的 render props 的地址不一致)
-   - 通常该属性的名字叫做 render
-2. HOC
+ReactDOM.createPortal(React 元素，真实的 DOM 容器)该函数返回一个 React 元素
+**注意事件冒泡**
+
+1. React 中的事件是包装过的
+2. 它的事件冒泡是根据虚拟 DOM 树来冒泡，与真实的 DOM 树无关
