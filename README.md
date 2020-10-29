@@ -17,8 +17,8 @@ React 元素-> 节点 -> UI
   - 节点类型：
     - React DOM 节点：创建该节点的 React 元素类型是一个字符串
     - React 组件节点：创建该节点的 React 元素类型是一个函数或者一个类
-    - React 文本节点：由字符串创建的
-    - React 空节点：由 null undefined false（不会生成 dom 元素）
+    - React 文本节点：由字符串，数字创建的
+    - React 空节点：由 null undefined false true（不会生成 dom 元素）
     - React 数组节点：该节点由一个数组创建
   - 真实 DOM:通过 document.createElement 创建的 dom 元素
 
@@ -30,8 +30,16 @@ React 元素-> 节点 -> UI
      2. 空节点：什么都不做
      3. 数组节点：遍历数组，将数组每一项递归创建节点（回到第一步进行反复操作，直到遍历结束）
      4. DOM 节点：通过 document.createElement 创建真实的 DOM 对象，然后立即设置该真实 DOM 元素的各种属性,然后遍历对应 React 元素的 children 属性，递归操作（回到第一步进行反复操作，直到遍历结束）
+     5. 组件节点
+        1. 函数组件：调用函数(该函数必须返回一个可以生成节点的内容)，将该函数的返回结果递归生成节点
+        2. 类组件：
+           1. 创建该类的实例
+           2. 立即调用对象的生命周期方法
+           3. 运行该对象的 render 方法，拿到节点对象（将该节点递归操作，回到第一步进行反复操作，直到遍历结束）
   3. 生成出虚拟 DOM 树之后，将该树保存起来，以便后续使用
   4. 将之前生成的真实 DOM 对象，加入到容器中
+
+react 元素
 
 ```js
 const app = (
@@ -46,3 +54,50 @@ const app = (
 ```
 
 以上代码生成虚拟 DOM 树
+![](assets/2019-07-25-14-17-04.png)
+
+函数组件
+
+```js
+function Comp1(props) {
+  return <h1>Comp1 {props.n}</h1>;
+}
+
+function App(props) {
+  return (
+    <div>
+      <Comp1 n={5} />
+    </div>
+  );
+}
+
+const app = <App />;
+ReactDOM.render(app, document.getElementById("root"));
+```
+
+以上代码生成虚拟 DOM 树
+![](assets/2019-07-25-14-49-53.png)
+
+类组件
+
+```js
+class Comp1 extends React.Component {
+  render() {
+    return <h1>Comp1</h1>;
+  }
+}
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <Comp1 />
+      </div>
+    );
+  }
+}
+const app = <App />;
+ReactDOM.render(app, document.getElementById("root"));
+```
+
+以上代码生成虚拟 DOM 树
+![](assets/2019-07-25-14-56-35.png)
