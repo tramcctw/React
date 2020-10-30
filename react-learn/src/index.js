@@ -12,22 +12,24 @@ const app = <div>
    </p>
 </div>
 
+console.log(app)
+
 
 function  Comp1(props) {
   return <h1>Comp1 {props.n}</h1>
 }
 
-function  App(props) {
-  return (
-    <div>
-        <Comp1 n={5}/>
-    </div>
-  )
-}
+// function  App(props) {
+//   return (
+//     <div>
+//         <Comp1 n={5}/>
+//     </div>
+//   )
+// }
 
 ReactDOM.render(<App/>,
   document.getElementById('root')
 );
 
-console.log(<App/>)
-console.log(React.createElement(App,null,null))
+// console.log(<App/>)
+// console.log(React.createElement(App,null,null))

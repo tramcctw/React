@@ -2,6 +2,7 @@
 
 渲染：生成用于显示的对象，以及将这些对象形成真实的 DOM 对象
 React 元素-> 节点 -> UI
+![](assets/2019-07-25-13-51-08.png)
 
 - React 元素：React Element,通过 React.createElement 创建（语法糖 jsx）
 - 例如
@@ -12,10 +13,10 @@ React 元素-> 节点 -> UI
   ```
 
 - React 节点：专门用于渲染到 UI 界面到对象，React 会通过 React 元素，创建 React 节点
-  ReactDOM 一定是通过 React 节点来进行渲染的
+  **ReactDOM** 一定是通过 React 节点来进行渲染的
 
   - 节点类型：
-    - React DOM 节点：创建该节点的 React 元素类型是一个字符串
+    - React DOM 节点：创建该节点的 React 元素类型是一个字符串(内置组件)
     - React 组件节点：创建该节点的 React 元素类型是一个函数或者一个类
     - React 文本节点：由字符串，数字创建的
     - React 空节点：由 null undefined false true（不会生成 dom 元素）
@@ -33,7 +34,7 @@ React 元素-> 节点 -> UI
      5. 组件节点
         1. 函数组件：调用函数(该函数必须返回一个可以生成节点的内容)，将该函数的返回结果递归生成节点
         2. 类组件：
-           1. 创建该类的实例
+           1. 创建该类的实例（调用构造函数）
            2. 立即调用对象的生命周期方法：static getDerivedStateFromProps
            3. 运行该对象的 render 方法，拿到节点对象（将该节点递归操作，回到第一步进行反复操作，直到遍历结束）
            4. render 执行完后就会将该组件的 componentDidMount 加入到执行队列，当整个虚拟 DOM 树全部构建完毕，并且真实的 DOM 对象加入到容器中后，执行该队列
