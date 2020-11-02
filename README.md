@@ -123,11 +123,11 @@ ReactDOM.render(app, document.getElementById("root"));
 
 后续步骤
 
-- 1. 完成真实的 DOM 更新
-- 2. 依次调用执行队列中的 componentDidMount
-- 3. 依次调用执行队列中的 getSnapshotBeforeUpdate
-- 4. 依次调用执行队列中的 componentDidUpdate
-- 5. 依次调用执行队列中的 componentWillUnMount
+- 1. 更新虚拟 DOM 树
+- 2. 完成真实的 DOM 更新
+- 3. 依次调用执行队列中的 componentDidMount
+- 4. 依次调用执行队列中的 getSnapshotBeforeUpdate
+- 5. 依次调用执行队列中的 componentDidUpdate
 
 ### 对比更新
 
@@ -140,6 +140,8 @@ React 为了提高对比效率，做出以下假设
    1. 相同的节点类型：节点本身类型相同，如果是由 React 元素生成，type 值必须一致
    2. 其他的，都属于不相同的节点类型
 3. 多个兄弟通过唯一标识（key）来确定对比新节点
+
+key 值的作用：用于通过旧节点，寻找对应的新节点，如果某个旧节点有 key 值，则更新时，会寻找相同层级中的相同 key 值的节点，进行对比。
 
 #### 找到了对比的目标
 
@@ -173,4 +175,26 @@ React 为了提高对比效率，做出以下假设
   5. 将该对象的 getSnapshotBeforeUpdate 加入队列
   6. 将该对象的 componentDidUpdate 加入队列
 
+  **数组节点**：遍历数组进行**递归对比更新**
+
 - **不一致**
+
+整体上，卸载旧的节点，重新创建新的节点
+**创建新节点**
+进入新节点的挂载流程
+
+**卸载旧节点**
+
+1. **文本节点，DOM 节点，数组节点，空节点，函数组件节点**：直接放弃节点，如果节点有子节点，递归卸载节点
+2. **类组件节点**
+   1. 直接放弃该节点
+   2. 调用该节点的 componentWillUnMount 函数
+   3. 递归卸载子节点
+
+#### 没有对比的目标
+
+新的 DOM 树中有节点被删除
+新的 DOM 树中有节点添加
+
+- 创建新加入的节点
+- 卸载多余的旧节点
