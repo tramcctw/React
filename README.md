@@ -103,3 +103,74 @@ ReactDOM.render(app, document.getElementById("root"));
 
 以上代码生成虚拟 DOM 树
 ![](assets/2019-07-25-14-56-35.png)
+
+## 更新节点
+
+更新的场景：
+
+1. 重新调用 ReactDOM.render,完全重新生成节点树，触发根节点更新
+2. 在类组件中调用 setState,会导致该实例所在的节点更新
+
+**节点的更新**
+
+- 如果调用的是 ReactDOM.render, 进入根节点的**对比（diff）更新**
+- 如果调用的是 setState
+  - 1. 运行生命周期函数 static getDerivedStateFromProps
+  - 2. 运行 shouldComponentUpdate,如果该函数返回 false，终止当前流程
+  - 3. 运行 render，得到一个新的节点，进入该新的节点的**对比更新** //注意新的节点就是 render 返回的，可能和之前 render 返回的存在一定的差异性
+  - 4. 将生命周期函数 getSnapshotBeforeUpdate 加入自己的执行队列，以待将来执行
+  - 5. 将生命周期函数 componentDidUpdate 加入自己的执行队列，以待将来执行
+
+后续步骤
+
+- 1. 完成真实的 DOM 更新
+- 2. 依次调用执行队列中的 componentDidMount
+- 3. 依次调用执行队列中的 getSnapshotBeforeUpdate
+- 4. 依次调用执行队列中的 componentDidUpdate
+- 5. 依次调用执行队列中的 componentWillUnMount
+
+### 对比更新
+
+将新产生的节点，对比之前虚拟 DOM 中的节点，发现差异，完成更新
+问题：对比之前 DOM 树中哪个节点
+React 为了提高对比效率，做出以下假设
+
+1. 假设节点不会出现层次的移动，（对比时，直接找到旧树中对应位置的节点进行对比）
+2. 不同的节点类型会生成不同的结构
+   1. 相同的节点类型：节点本身类型相同，如果是由 React 元素生成，type 值必须一致
+   2. 其他的，都属于不相同的节点类型
+3. 多个兄弟通过唯一标识（key）来确定对比新节点
+
+#### 找到了对比的目标
+
+判断节点类型是否一致
+
+- **一致**
+  根据不同类型节点，做不同的事情
+
+  **空节点**：不做任何事情
+  **DOM 节点**
+
+  1. 直接重用之前的真实 DOM 对象
+  2. 将其属性的变化记录下来，以待将来统一完成更新(现在不会真正的变化)
+  3. 遍历该新的 React 元素的子元素，**递归对比更新**
+
+  **文本节点**
+
+  1. 直接重用之前的真实 DOM 对象
+  2. 将新的文本变化记录下来，将来统一更新
+
+  **组件节点**
+
+  **函数组件**：重新调用函数，得到一个节点对象，进入**递归对比更新**
+
+  **类组件**
+
+  1. 重用之前的实例
+  2. 调用生命周期方法 getDerivedStateFromProps
+  3. 调用生命周期方法 shouldComponentUpdate,如果该函数返回 false，终止当前流程
+  4. 运行 render 得到新的节点对象，进行**递归对比更新**
+  5. 将该对象的 getSnapshotBeforeUpdate 加入队列
+  6. 将该对象的 componentDidUpdate 加入队列
+
+- **不一致**
