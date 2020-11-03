@@ -1,37 +1,32 @@
 import React from 'react';
-import {Route,BrowserRouter as Router,Switch} from 'react-router-dom'
+import {Route,BrowserRouter as Router,Switch,withRouter} from 'react-router-dom'
+// import qs from 'query-string'
 
-function A(props){
-    console.log(props.history)
+const BWrapper = withRouter(B)
+// 将路由信息传入
+
+function News(props){
     return (
         <div>
-            <h1>组件B状态数据：{props.history.location.state}</h1>
-            <h2>组件A</h2>
-            <button onClick={()=>{
-                props.history.push('/b','hahah')
-            }}>跳转组件B</button>
+            <h2>新闻页面</h2>
+            <BWrapper/>
         </div>
     )
 }
 
-function B(props){
-    console.log(props.history)
+
+function B(props) {
+    console.log(props)
     return (
-        <div>
-            <h1>组件B状态数据：{props.history.location.state}</h1>
-            <h2>组件B</h2>
-            <button onClick={()=>{
-                props.history.push('/a','hehehhe')
-            }}>跳转组件A</button>
-        </div>
+        <button onClick={()=>{
+            props.history.push('/')
+        }}>获取首页</button>
     )
 }
 
-function NotFound(){
+function Index(props) {
     return (
-        <div>
-            <h2>没有页面～</h2>
-        </div>
+        <h2>首页</h2>
     )
 }
 
@@ -40,9 +35,8 @@ function App(){
     return (
         <Router>
             <Switch>
-                <Route path='/a' component={A}/>
-                <Route path='/b' component={B}/>
-                <Route component={NotFound}/>
+                <Route path="/news" exact component={News}/>
+                <Route path="/" exact component={Index}/>
             </Switch>
         </Router>
     )
