@@ -1,40 +1,51 @@
-import React from 'react'
-import { BrowserRouter as Router,Route,Switch} from 'react-router-dom'
+import React from 'react';
+import {Route,BrowserRouter as Router,Switch} from 'react-router-dom'
 
-
-function A(){
+function A(props){
+    console.log(props.history)
     return (
-        <h1>组件A</h1>
+        <div>
+            <h1>组件B状态数据：{props.history.location.state}</h1>
+            <h2>组件A</h2>
+            <button onClick={()=>{
+                props.history.push('/b','hahah')
+            }}>跳转组件B</button>
+        </div>
     )
 }
 
-function B(){
+function B(props){
+    console.log(props.history)
     return (
-        <h1>组件B</h1>
+        <div>
+            <h1>组件B状态数据：{props.history.location.state}</h1>
+            <h2>组件B</h2>
+            <button onClick={()=>{
+                props.history.push('/a','hehehhe')
+            }}>跳转组件A</button>
+        </div>
     )
 }
 
-function C(){
+function NotFound(){
     return (
-        <h1>找不到页面～</h1>
+        <div>
+            <h2>没有页面～</h2>
+        </div>
     )
 }
 
 
-export default function App(){
-
+function App(){
     return (
         <Router>
-            {/* <Route path='/a' sensitive component={A}></Route>
-            <Route path='/a/b' exact component={B}></Route>
-            <Route path='/a/c' exact component={C}></Route> */}
-
             <Switch>
-                <Route path='/a'   component={A}></Route>
-                <Route path='/a/b' component={B}></Route>
-                <Route  component={C}></Route>
+                <Route path='/a' component={A}/>
+                <Route path='/b' component={B}/>
+                <Route component={NotFound}/>
             </Switch>
         </Router>
-       
     )
 }
+
+export default App;
