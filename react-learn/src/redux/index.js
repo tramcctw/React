@@ -1,13 +1,42 @@
 
 // 帮助创建数据仓库
-import {createStore,bindActionCreators} from 'redux'
+import {createStore,bindActionCreators,applyMiddleware} from 'redux'
 import * as loginUser from './action/loginUserAction'
 import * as users from './action/usersAction'
 import reducer from './reducer'
 
+const logger1 = store=>next=>action=>{
+    console.log('中间件1',action)
+    next(action)   
+}
 
-const store = createStore(reducer)      // 此时会调用reducer
+
+// function logger1(store){
+
+//     return function(next){  //  下一个-中间件的dispatch，从后往前增强
+//         return function(action){    // 返回一个dispatch函数，是在下一个dispatch中增强后的dispatch
+//             console.log('中间件1',action)
+//             next(action)                        // 调用下一个dispatch
+//         }
+//     }
+// }
+
+function logger2(store){    // store.dispatch 原始的dispatch
+    return function(next){  //  下一个-中间件的dispatch，从后往前增强
+        return function(action){    // 返回一个dispatch函数，是在下一个dispatch中增强后的dispatch
+            console.log('中间件2',action)
+            next(action)           //没有下一个，则调用原始的dispatch
+        }
+    }
+}
+
+//创建仓库的方式1
+// const store = createStore(reducer,applyMiddleware(logger1,logger2))      // 此时会调用reducer
 //创建一个仓库,第一位表示是处理器,第二位表示初始状态值
+
+// 方式2 
+const store = applyMiddleware(logger1,logger2)(createStore)(reducer)
+
 
 // const action = {
 //     type:actionType.INCREASE
@@ -16,27 +45,29 @@ const store = createStore(reducer)      // 此时会调用reducer
 //得到一个新对象，新对象中的属性名与第一个参数的属性名一致
 // const boundActions = bindActionCreators(numberActions,store.dispatch)
 
+console.log(store.dispatch)
 
-const unListen =  store.subscribe(()=>{
-    console.log('状态变化');
-    console.log(store.getState());
-})
+// const unListen =  store.subscribe(()=>{
+//     console.log('状态变化');
+//     console.log(store.getState());
+// })
 
 
-store.subscribe(()=>{
-    console.log('状态变化2');
-})
+// store.subscribe(()=>{
+//     console.log('状态变化2');
+// })
 // 注册监听器，当分发action后会依次运行
 
 
-store.dispatch(loginUser.setLoginUser({
-        id:3,
-        name:'zhangsan',
-        age:10
-}))
+// store.dispatch(loginUser.setLoginUser({
+//         id:3,
+//         name:'zhangsan',
+//         age:10
+// }))
 
-unListen()
+// unListen()
 // 取消监听
+
 
 store.dispatch(users.addUser({
     id:3,
@@ -50,13 +81,14 @@ store.dispatch(users.addUser({
     age:10
 }))
 
+console.log(store.getState());
 
-store.dispatch(users.deleteUser(3))
+// store.dispatch(users.deleteUser(3))
 
-store.dispatch(users.updateUser(1,{
-    id:100,
-    name:'twc'
-}))
+// store.dispatch(users.updateUser(1,{
+//     id:100,
+//     name:'twc'
+// }))
 
 
 //等价于
