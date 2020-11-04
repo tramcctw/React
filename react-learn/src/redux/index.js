@@ -21,9 +21,12 @@ const logger1 = store=>next=>action=>{
 //     }
 // }
 
-function logger2(store){    // store.dispatch 原始的dispatch
+
+const arr = []
+function logger2(store){    // store.dispatch 最终的dispatch
     return function(next){  //  下一个-中间件的dispatch，从后往前增强
         return function(action){    // 返回一个dispatch函数，是在下一个dispatch中增强后的dispatch
+            arr.push(store.dispatch)
             console.log('中间件2',action)
             next(action)           //没有下一个，则调用原始的dispatch
         }
@@ -46,6 +49,7 @@ const store = applyMiddleware(logger1,logger2)(createStore)(reducer)
 // const boundActions = bindActionCreators(numberActions,store.dispatch)
 
 console.log(store.dispatch)
+console.log(store.dispatch === arr[0])  // false
 
 // const unListen =  store.subscribe(()=>{
 //     console.log('状态变化');
