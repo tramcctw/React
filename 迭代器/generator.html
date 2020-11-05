@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+        // function* createGenerator() {
+        //     console.log('start')
+        //     yield 1;//（输出）返回{value:1,done:false}结束
+        //     console.log('run1')
+        //     yield 2;
+        //     console.log('run2')
+        //     yield 3;
+        //     console.log('over')
+        // }
+
+        // const generator = createGenerator()
+            
+        // function*  createGenerator(arr) {
+        //     for(let item of arr){
+        //         console.log('111')
+        //         yield item;
+        //     } 
+        //     console.log('over')
+        // }
+
+        // const iterator = createGenerator([1,2,3,4])
+
+        function*  createGenerator(arr) {
+            console.log('start')
+            let result = yield 1;//返回{value:1,done:false}结束
+            console.log('run1',result)
+            result = yield 2;   
+            // 执行完yield，暂停，并未完成赋值，然后继续执行开始赋值，赋传入的值
+            console.log('run2',result)
+            result = yield 3;
+            console.log('over',result)
+        }
+
+        const iterator = createGenerator([1,2,3,4])
+        iterator.next()  //此时传入的值是undefined，result拿到的值undefined
+        iterator.next('aaaa') // 此时传入的aaaa传给result
+    </script>
+</body>
+</html>

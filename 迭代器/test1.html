@@ -22,6 +22,42 @@
             }
         }
 
+        function  createIterator(arr) {
+            let i = 0
+            return {
+                next(){
+                    return {
+                        value:arr[i ++],
+                        done:i > arr.length
+                    }
+                }
+            }
+        }
+
+        const it = createIterator([1,2,3,4,5,6])
+
+
+        // for-of循环对象必须是一个可迭代对象
+        // 该对象满足可迭代协议，是一个可迭代对象
+        const obj = {
+            [Symbol.iterator]: function  createIterator() {
+                let arr = [1,2,3,4,5,6]
+                let i = 0
+                return {
+                    next(){
+                        return {
+                            value:arr[i ++],
+                            done:i > arr.length
+                        }
+                    }
+                }
+            }
+        }
+
+        for(const item of obj){
+            console.log(item)
+        }
+
     </script>
 
 </body>
