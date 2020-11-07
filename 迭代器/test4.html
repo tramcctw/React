@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+        
+        function* task() {
+            console.log('start');
+            let result = yield 1
+            console.log('获取到的数据1：',result)
+            result = yield 2;
+            console.log('又获取到了数据2：',result)
+            result = yield 3;
+            console.log('又获取到了数据3：',result)
+        }
+
+        const generator = task()
+        generator.next()
+        // generator.throw(new Error('error')) // 直接报错
+        generator.return() //结束生成器函数
+        
+    </script>
+</body>
+</html>

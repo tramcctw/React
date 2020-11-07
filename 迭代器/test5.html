@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+
+        function* g2() {
+            console.log('g2 start');
+            let result = yield 'a'
+            console.log('g1',result)
+            result = yield 'b'
+        }
+        
+        function* task() {
+            console.log('start');
+            let result = yield 1
+            console.log('获取到的数据1：',result)
+            result = yield 2;
+            result = yield* g2()  // 为函数的返回值
+            console.log('又获取到了数据2：',result)
+            result = yield 3;
+            console.log('又获取到了数据3：',result)
+        }
+
+        const generator = task()
+        
+    </script>
+</body>
+</html>

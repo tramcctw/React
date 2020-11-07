@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        function  getDatas() {
+            return new Promise(resolve=>{
+                setTimeout(() => {
+                    resolve('hello')
+                }, 2000);
+            })
+        }
+
+
+        function* task() {
+            console.log('start');
+            let result = yield getDatas()
+            console.log('获取到的数据1：',result)
+            result = yield getDatas()
+            console.log('又获取到了数据2：',result)
+            result = yield 1;
+            console.log('又获取到了数据3：',result)
+        }
+
+        // {value:promise,done:false}
+
+        function run(generatorFunc) {
+            let generator = generatorFunc()
+            let result = generator.next()
+            next(result)
+            function next(result) {
+                if(result.done){
+                    return;
+                }
+                if(typeof result.value === "object"){
+                    result.value.then(res=>{
+                      result = generator.next(res)
+                      next(result)
+                    })
+                }else{
+                    result = generator.next(result.value)
+                    next(result)
+                }
+            }
+        }
+
+        run(task)
+    </script>
+
+</body>
+</html>

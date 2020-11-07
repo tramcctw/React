@@ -43,8 +43,13 @@
         }
 
         const iterator = createGenerator([1,2,3,4])
-        iterator.next()  //此时传入的值是undefined，result拿到的值undefined
-        iterator.next('aaaa') // 此时传入的aaaa传给result
+        // iterator.next()  //此时传入的值是undefined，result拿到的值undefined
+        // iterator.next('aaaa') // 此时传入的aaaa传给result
+
+        let result = iterator.next()  //{value:3,done:false} result:1
+        while (!result.done) {
+            result = iterator.next(result.value)
+        }
     </script>
 </body>
 </html>
