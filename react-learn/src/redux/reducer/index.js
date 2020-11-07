@@ -1,6 +1,6 @@
 import loginUserReduer from './loginUserReducer'
 import usersReducer from './usersReducer'
-
+import counterReducer from "./counterReducer";
 import {combineReducers} from 'redux'
 
 
@@ -16,5 +16,6 @@ import {combineReducers} from 'redux'
 
 export default combineReducers({
     loginUser:loginUserReduer,
-    users:usersReducer
+    users:usersReducer,
+    counterReducer
 })
