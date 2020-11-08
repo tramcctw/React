@@ -22,8 +22,8 @@
 
         const generator = task()
         generator.next()
-        // generator.throw(new Error('error')) // 直接报错
-        generator.return() //结束生成器函数
+        generator.throw(new Error('error')) // 直接报错
+        // generator.return() //结束生成器函数
         
     </script>
 </body>

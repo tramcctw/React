@@ -5,6 +5,7 @@ export const DELETEUSER = 'delete-user'
 export const UPDATEUSER = 'update-user'
 export const SETUSER = 'set-user'
 export const SETLOADING = 'set-loading'
+export const FETCHSTUDENTS = 'fetch-students'
 
 export const addUser = (payload) => ({
     type: ADDUSER,
@@ -31,16 +32,22 @@ export const setLoading = (isLoading)=>({
     isLoading
 })
 
-export const fetchStudent = ()=>{
-    // thunk 允许action是一个有副作用的函数
-    return async (dispatch,getState,extra)=>{
-        console.log(getState());
-        console.log(extra);
-        dispatch(setLoading(true))
-        const users = await getAllStudents()
-        dispatch(setUser(users))
-        dispatch(setLoading(false))
+// export const fetchStudent = ()=>{
+//     // thunk 允许action是一个有副作用的函数
+//     return async (dispatch,getState,extra)=>{
+//         console.log(getState());
+//         console.log(extra);
+//         dispatch(setLoading(true))
+//         const users = await getAllStudents()
+//         dispatch(setUser(users))
+//         dispatch(setLoading(false))
+//     }
+// }
+
+
+export function  fetchStudents() {
+    return{
+        type:FETCHSTUDENTS
     }
 }
-
 
