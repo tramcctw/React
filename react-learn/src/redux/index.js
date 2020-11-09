@@ -10,7 +10,6 @@ const sagaMid = createSagaMiddleware() // 创建一个saga中间件
 
 
 
-
 const store = createStore(reducer,applyMiddleware(sagaMid,logger))
                                                 // logger一般认识对象，
                                                 // 而action可能是一个函数

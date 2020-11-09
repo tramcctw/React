@@ -1,26 +1,28 @@
 import { actionTypes,increase,decrease } from '../action/counter'
 import { takeEvery,delay,put, fork, take, cancel, takeLatest, cancelled } from 'redux-saga/effects'
 
-// function* asyncIncrease() {
-//     yield delay(2000);        // 不会阻塞action的传递，
-//     yield put(increase())     // 传入一个action，相当于两秒后再加一
-//     console.log('asyncIncrease')
-// }
+function* asyncIncrease() {
+    while(true){
+        yield take(actionTypes.asyncIncrease)
+        yield delay(2000);        // 不会阻塞action的传递，
+        yield put(increase())     // 传入一个action，相当于两秒后再加一
+    }
+}
 
-// function* asyncDecrease() {
-//     let task;
-//     while (true) {
-//         yield take(actionTypes.asyncDecrease)
-//         if(task){
-//             console.log(task)
-//             yield cancel(task)
-//         }
-//         task = yield fork(function* () {
-//             yield delay(2000)
-//             yield put(decrease())
-//         }) 
-//     }
-// }
+function* asyncDecrease() {
+    let task;
+    while (true) {
+        yield take(actionTypes.asyncDecrease)
+        if(task){
+            console.log(task)
+            yield cancel(task)
+        }
+        task = yield fork(function* () {
+            yield delay(2000)
+            yield put(decrease())
+        }) 
+    }
+}
 
 let task
 function* autoIncrease() {
@@ -57,8 +59,8 @@ function* autoIncrease() {
 export default function* () {
     // let result =  yield 2;  // 普通数据之间放入next参数中继续执行
     // console.log(result)
-
-    // yield fork(asyncDecrease)       // 开启一个线程去执行该函数 不阻塞
+    yield fork(asyncIncrease)
+    yield fork(asyncDecrease)       // 开启一个线程去执行该函数 不阻塞
     // yield fork(autoIncrease)
     // yield takeEvery(actionTypes.asyncIncrease,asyncIncrease)
     // yield takeLatest(actionTypes.autoIncrease,autoIncrease)

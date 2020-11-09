@@ -17,5 +17,5 @@ import {combineReducers} from 'redux'
 export default combineReducers({
     loginUser:loginUserReduer,
     users:usersReducer,
-    counterReducer
+    counter:counterReducer
 })
