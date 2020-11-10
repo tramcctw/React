@@ -16,28 +16,27 @@ function Counter(props) {
 }
 
 function mapStateToProps(state,ownProps){ // connect 自动传入store.getState()
-    console.log(ownProps)
     return {
         counter:state.counter
     }
 }
 
-// function mapDispatchToProps(dispatch){  // connect 自动传入store.dispatch
-//     return {
-//         increase(){
-//             dispatch(increase())
-//         },
-//         decrease(){
-//             dispatch(decrease())
-//         },
-//         asyncIncrease(){
-//             dispatch(asyncIncrease())
-//         },
-//         asyncDecrease(){
-//             dispatch(asyncDecrease())
-//         }
-//     }
-// }
+function mapDispatchToProps(dispatch){  // connect 自动传入store.dispatch
+    return {
+        increase(){
+            dispatch(increase())
+        },
+        decrease(){
+            dispatch(decrease())
+        },
+        asyncIncrease(){
+            dispatch(asyncIncrease())
+        },
+        asyncDecrease(){
+            dispatch(asyncDecrease())
+        }
+    }
+}
 
 // function mapDispatchToProps(dispatch){  // connect 自动传入store.dispatch
 //     const obj = bindActionCreators({
@@ -52,12 +51,12 @@ function mapStateToProps(state,ownProps){ // connect 自动传入store.getState(
 // }
 
 
-const creator = {
-    increase,  
-    decrease,
-    asyncIncrease,
-    asyncDecrease
-}
+// const creator = {
+//     increase,  
+//     decrease,
+//     asyncIncrease,
+//     asyncDecrease
+// }
 
 
 //  class CounterContainer extends React.Component{
@@ -81,4 +80,4 @@ const creator = {
 
  // connect返回的高阶组件帮助完成CounterContainer效果
 // export default connect(mapStateToProps,mapDispatchToProps)(Counter)
-export default connect(mapStateToProps,creator)(Counter)
+export default connect(mapStateToProps,mapDispatchToProps)(Counter)
