@@ -1,10 +1,10 @@
 export const actionTypes = {
-    increase:Symbol('increase'),
-    decrease:Symbol('decrease'),
-    asyncIncrease:Symbol('async-increase'),
-    asyncDecrease:Symbol('async-decrease'),
-    autoIncrease:Symbol('auto-increase'),
-    stopIncrease:Symbol('stop-increase')
+    increase:'INCRASE',
+    decrease:'DECREASE',
+    asyncIncrease:'ASYNC_INCREASRE',
+    asyncDecrease:'ASYNC_DECREASE',
+    autoIncrease:'AUTO_INCREASE',
+    stopIncrease:'STOP_DECREASE'
 }
 
 export function  increase() {

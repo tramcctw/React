@@ -1,4 +1,4 @@
-// import store from './index'
+import store from './index'
 import * as users from './action/usersAction'
 import { increase,decrease,asyncDecrease,asyncIncrease, autoIncrease, stopIncrease} from './action/counter'
 
@@ -9,12 +9,12 @@ import { increase,decrease,asyncDecrease,asyncIncrease, autoIncrease, stopIncrea
 // store.dispatch(asyncDecrease())
 // store.dispatch(users.setLoading(true))
 // store.dispatch(users.fetchStudents());
-// window.autoIncrease = function () {
-//     store.dispatch(autoIncrease())
-// }
+window.autoIncrease = function () {
+    store.dispatch(autoIncrease())
+}
 
-// window.stopIncrease = function () {
-//     store.dispatch(stopIncrease())
-// }
+window.stopIncrease = function () {
+    store.dispatch(stopIncrease())
+}
 
 // console.log(store.getState())

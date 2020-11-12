@@ -1,26 +1,23 @@
-# react-redux
+课前知识
+> chrome插件：redux-devtools
+> 安装
+# redux和router的结合(connected-react-router)
+用于将redux和react-router进行结合
+本质上，router中某些数据可能跟数据仓库中的数据进行联动
+该组件会将下面的路由数据和仓库保持同步
 
+1. action：它不是redux的action，它表示当前路由跳转的方式
+（push，POP，replace）
 
->如果一个组件，仅用于渲染一个UI界面，而没有状态（通常是一个函数组件），该组件叫做**展示组件**
->如果一个组件，仅用于提供数据，没有任何属于自己的ui界面，则该组件叫做**容器组件**容器组件纯粹是为了给其他组件提供数据。
+2. location：它记录了当前的地址信息
 
-react-redux库：链接redux和react
-- Provider组件：没有任何UI界面，该组件的作用是将redux的仓库放到一个上下文中。
-- connect:高阶组件，用于链接仓库和组件的
+## connectRouter
+这是一个函数，调用它，会返回一个用于管理仓库中路由信息的reducer,该函数需要传递一个参数，参数是一个history对象，该对象可以使用第三方库history获得
 
-- 细节一：如果对返回的容器组件加上额外的属性，则这些属性会直接传递到展示组件
-connect的参数一
-- mapStateToProps:
-    - 参数一：整个仓库的状态
-    - 参数二：使用者传递的属性对象
-    - 函数返回的对象被展开会传递到展示组件里面去
-connect的参数二
-- mapDispatchToPorps:
-    - 参数一：dispatch函数
-    - 参数二: 使用者传递的属性对象
-    - 函数返回的对象被展开会传递到展示组件里面去
-- 传递的是一个对象：对象的每个属性是一个action创建函数，当事件触发时，会自动dispatc函数返回的action
+# routerMiddleware 
+该函数会返回一个redux中间件，用于拦截一些特殊的action
 
-- 细节二
-- 如果参数二不传递属性，counter的props自动得到属性dispatch，可以使组件自己dispatch，但是耦合度太高
-    
+## ConnectedURouter 
+这是一个组件，用于向上下文提供一个history对象和其他的路由信息(与react-router提供的信息一致)
+
+之所以需要制作一个组件，是因为该库必须保证整个过程使用的是同一个history对象

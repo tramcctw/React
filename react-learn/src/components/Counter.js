@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {increase,decrease,asyncDecrease,asyncIncrease} from '../redux/action/counter'
 import {bindActionCreators} from 'redux'
+import history from '../redux/history'
 
 function Counter(props) {
     return (
