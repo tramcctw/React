@@ -35,8 +35,11 @@ function App(){
     return (
         <Router>
             <Switch>
-                <Route path="/news" exact component={News}/>
-                <Route path="/" exact component={Index}/>
+                <Route path="/a" exact  component={News}>
+                    <h2 style={{color:"red"}}>hello</h2>
+                    <p>sjsfldskf</p>
+                </Route>
+                <Route path="/a/b" exact component={Index}/>
             </Switch>
         </Router>
     )
