@@ -1,0 +1,21 @@
+.page1 {
+  width: 500px;
+  border: 3px solid black;
+  margin: 0 auto;
+  background-color: lightcoral;
+}
+.page2 {
+  width: 500px;
+  border: 3px solid black;
+  margin: 0 auto;
+  background-color: lightcyan;
+}
+
+a {
+  margin-right: 20px;
+}
+
+.link {
+  position: fixed;
+  top: 50%;
+}

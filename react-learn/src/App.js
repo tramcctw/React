@@ -1,48 +1,35 @@
-import React from 'react';
-import {Route,BrowserRouter as Router,Switch,withRouter} from 'react-router-dom'
-// import qs from 'query-string'
+import React, { useState, useEffect } from "react";
 
-const BWrapper = withRouter(B)
-// 将路由信息传入
+export default function () {
+  const [test, setTest] = useState(["hello"]);
+  const [refresh, setRefresh] = useState({});
 
-function News(props){
-    return (
-        <div>
-            <h2>新闻页面</h2>
-            <BWrapper/>
-        </div>
-    )
+  function change() {
+    test.push("html");
+    setTest([...test]);
+  }
+
+  function find() {
+    console.log(test);
+  }
+
+  return (
+    <>
+      <button
+        onClick={() => {
+          change();
+        }}
+      >
+        按钮
+      </button>
+
+      <button
+        onClick={() => {
+          find();
+        }}
+      >
+        查看
+      </button>
+    </>
+  );
 }
-
-
-function B(props) {
-    console.log(props)
-    return (
-        <button onClick={()=>{
-            props.history.push('/')
-        }}>获取首页</button>
-    )
-}
-
-function Index(props) {
-    return (
-        <h2>首页</h2>
-    )
-}
-
-
-function App(){
-    return (
-        <Router>
-            <Switch>
-                <Route path="/a" exact  component={News}>
-                    <h2 style={{color:"red"}}>hello</h2>
-                    <p>sjsfldskf</p>
-                </Route>
-                <Route path="/a/b" exact component={Index}/>
-            </Switch>
-        </Router>
-    )
-}
-
-export default App;
