@@ -24,11 +24,13 @@ export default function App(){
                 <button onClick={()=>{setN(n-1)}}>-</button>
                 <span>{n}</span>
                 <button onClick={()=>{
-                    // setN(n+1)
+                    // setN(n+1)       // 不会立即改变状态，而是合并后统一刷新
                     // setN(n+1)       //异步执行两次执行完还是1
                         setN(preN=>preN+1)
                         setN(preN=>preN+1)
                         // 返回之后拿到的是相加后的值
+                        // 返回的状态临时存放在一个变量中，
+                        // 没有状态变化后，统一刷新
                     }}>+</button>
             </p>
             <button onClick={()=>{
