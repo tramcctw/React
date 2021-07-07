@@ -47,5 +47,6 @@ function* getAllStudent() {
 
 
 export default function* () {
+    // 注意触发日志action是 fetchStudents 触发的
     yield takeEvery(actionTypes.fetchStudents, getAllStudent);
 }

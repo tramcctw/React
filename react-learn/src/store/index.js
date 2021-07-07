@@ -9,9 +9,9 @@ const sagaMid = createSagaMiddleware(); //创建一个saga的中间件
 // 这里返回一个中间件
 
 const logger = store => next => action => {
-    console.log('状态改变前',store.getState())
+    console.log('状态改变前',store.getState(),action)
     next(action)
-    console.log('状态改变后',store.getState())
+    console.log('状态改变后', store.getState(),action) 
 }
 
 const store = createStore(reducer,

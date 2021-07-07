@@ -24,7 +24,7 @@ export default function createStore(reducer, defaultState, enhance) {
     if (!isPlainObject(action)) {
       throw new Error('action must is plain object')
     }
-    prevState = { ...currState }
+    prevState = currState 
     currState = reducer(currState, action)
     for (let lis of listens) {
       lis(prevState, currState)
