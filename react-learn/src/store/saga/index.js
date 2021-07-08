@@ -1,7 +1,7 @@
 import { call, delay, put, select, takeEvery, fork } from "../../redux-saga/effects"
-import { getStudents } from '../../services/student'
 import { setStudentsAndTotal } from '../../store/action/student/searchResult'
 import { actionTypes } from '../action/student/searchResult'
+import { getStudents } from '../../services/student'
 
 // function test(...rest) {
 //     return new Promise((resolve, reject) => {
@@ -40,6 +40,7 @@ function* getAllStudent() {
     yield fork(testFork)
     const ret = yield call(getStudents)
     yield put(setStudentsAndTotal(ret.findByPage, ret.cont))
+    // 这里的dispatch是原生的dispatch
     const res = yield select()
     console.log(res)
 }

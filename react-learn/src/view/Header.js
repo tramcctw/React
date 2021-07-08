@@ -26,7 +26,7 @@ function Header(props) {
 
 
   const lis = props.stus.map(item => {
-    return <li key={ item.id }>地区---{item.address}---姓名{item.name}---电话{ item.phone }</li>
+    return <li key={ item.id }>地区---{item.address}---姓名---{item.name}---电话---{ item.phone }</li>
   })
 
    return <div>
