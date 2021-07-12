@@ -11,15 +11,20 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    increase: function () {
-      dispatch(increase())
-    },
-    getStudents: function () {
-      dispatch(fetchStudents())
-    }
-  }
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     increase: function () {
+//       dispatch(increase())
+//     },
+//     getStudents: function () {
+//       dispatch(fetchStudents())
+//     }
+//   }
+// }
+
+const mapDispatchToProps = {
+  increase,
+  getStudents:fetchStudents,
 }
 
 function Header(props) {

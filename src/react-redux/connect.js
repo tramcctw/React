@@ -34,7 +34,7 @@ export default function (mapStateToProps, mapDispatchToProps) {
         if (typeof mapDispatchToProps === 'function') {
           hanleAction = mapDispatchToProps(store.dispatch)
         } else if (typeof mapDispatchToProps === 'object') {
-          hanleAction = bindActionCreators(mapDispatchToProps)
+          hanleAction = bindActionCreators(mapDispatchToProps,store.dispatch)
         }
       }
       return <Comp {...props} {...state} {...hanleAction} />
