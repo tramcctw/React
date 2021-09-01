@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-// import Link from "./Link";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Link from "./Link";
 
 function PageB(props) {
   console.log(props);

@@ -39,9 +39,7 @@ class GuardRouter extends Component {
   render() {
     return (
       <Router getUserConfirmation={this.handleConfirmation}>
-        <MyGuardRouterWrapper
-          onChange={this.props.onChange}
-        ></MyGuardRouterWrapper>
+        <MyGuardRouterWrapper onChange={this.props.onChange} />
         {this.props.children}
       </Router>
     );

@@ -14,7 +14,7 @@ export default function AnimationRouter(props) {
             mountOnEnter={true}
             unmountOnExit={true}
           >
-            <Component></Component>
+            <Component />
           </CSSTransition>
         );
       }}

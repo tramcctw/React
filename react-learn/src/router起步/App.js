@@ -47,7 +47,7 @@ function App() {
   console.log(1111);
   return (
     <Router>
-      <Route path="/b" exact component={B} />
+      <Route path="/b" exact component={B} render={() => <h1>hi</h1>} />
       <Route path="/a" exact component={A}></Route>
       <Route path="/c" component={NotFound}>
         {() => {

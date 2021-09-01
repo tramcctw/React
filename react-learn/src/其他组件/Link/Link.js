@@ -10,6 +10,7 @@ function Link(props) {
         e.preventDefault();
         props.history.push(props.to);
       }}
+      ref={props.innerRef}
     >
       {props.children}
     </a>
