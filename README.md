@@ -74,6 +74,7 @@ React-Router 为我们提供了两个重要的组件
 3. children(优先级要高于 render):
    1. 传递 React 元素，必须匹配到，一定会显示 children，并且会忽略 component 属性
    2. 传递一个函数，无论是否匹配到，只要进行匹配，该函数有多个参数，这些参数来自于上下文，该函数返回 react 元素，则一定会显示返回的元素，并且忽略 component 属性 **放在 Switch 中只有匹配到了才有效**
+      只有匹配到了 match 才有值
 4. render(此时不需要写 component 属性):(val(router 上下文))=>{return react 节点}
    给一个函数，当正确匹配到了，就会运行该函数，该函数要返回一个可渲染的 react 节点，然后渲染该节点,优先级低于 components
 
