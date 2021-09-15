@@ -1,5 +1,5 @@
 
-// block 只能监听一次
+// block 只能监听一个
 export default class BlockManager {
 
     constructor(getUserConfirmation){

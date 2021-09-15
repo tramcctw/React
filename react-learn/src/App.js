@@ -1,18 +1,33 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Link } from "./react-router-dom";
 
 function Page1(props) {
-  // console.log(props.match);
-  return <h1>hello</h1>;
+  console.log(props);
+  return <h1>Page1</h1>;
+}
+
+function Page2() {
+  return <h1>Page2</h1>;
+}
+
+function Change({ history }) {
+  return (
+    <div>
+      <button onClick={() => history.push("/page1")}>去Page1</button>
+      <button onClick={() => history.push("/page2")}>去Page2</button>
+    </div>
+  );
 }
 
 export default function () {
   return (
-    <div>
-      <Router>
-      <Link to="/news/123">跳转</Link>
-        <Route path="/news/:id" component={Page1} exact />
-      </Router>
-    </div>
+    <BrowserRouter>
+     <ul>
+       <Link to='/page1'>去Page1</Link>
+     </ul>
+      <Route path="/page1" component={Page1} />
+      <Route path="/page2" component={Page2} />
+      {/* <Route component={Change} /> */}
+    </BrowserRouter>
   );
 }

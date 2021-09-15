@@ -32,20 +32,23 @@ export default function browserHistory(options = {}) {
   }
 
   function push(path, state) {
-    changePage(path, state, true);
+    changePage(path, state, 0);
   }
 
   function replace(path, state) {
-    changePage(path, state, false);
+    changePage(path, state, 1);
   }
 
   function changePage(path, state, isPush) {
     let action = "PUSH";
-    if (!isPush) {
+    if (isPush === 1) {
       action = "REPLACE";
     }
+    if (action === 2) {
+      action = "POP";
+    }
 
-    // 需要跳转的是一个完整的path
+    // 需要跳转的是一个完整的path,可能会有basename
     const pathInfo = getPretifyState(path, state, basename);
     const location = getLocationFromPath(pathInfo);
     // 注意这里的location，是跳转之后的 location
@@ -54,29 +57,53 @@ export default function browserHistory(options = {}) {
         return;
       }
       const key = createKey(keyLength);
-      if(action === 'PUSH') {
-        window.history.pushState({
-          state: pathInfo.state,
-          key,
-        },null,pathInfo.pathResult);
-      }else {
-        window.history.replaceState({
-          state: pathInfo.state,
-          key,
-        },null,pathInfo.pathResult);
+      if (action === "PUSH") {
+        window.history.pushState(
+          {
+            state: pathInfo.state,
+            key,
+          },
+          null,
+          pathInfo.pathResult
+        );
+      } else {
+        window.history.replaceState(
+          {
+            state: pathInfo.state,
+            key,
+          },
+          null,
+          pathInfo.pathResult
+        );
       }
       location.key = key;
       history.location = location;
       history.action = action;
 
-      if(forceRefresh){
+      if (forceRefresh) {
         window.location.href = pathInfo.pathResult;
       }
-      
-      listeners.triggerListennerEvent(location,action);
 
+      listeners.triggerListennerEvent(location, action);
     });
   }
+
+  function addDomListener() {
+    window.addEventListener("popstate", () => {
+      // 这里事件触发本身就会触发栈的修改，此时只需要通知react刷新界面即可
+      const location = getLocation(basename);
+      const action = "POP";
+      blocks.triggerBlockEvents(location, action, (isJump) => {
+        if (!isJump) {
+          return;
+        }
+        listeners.triggerListennerEvent(location, action);
+        history.location = location;
+      });
+    });
+  }
+
+  addDomListener();
 
   function listen(callback) {
     return listeners.addEventListenner(callback);
@@ -93,6 +120,7 @@ export default function browserHistory(options = {}) {
 
   const history = {
     action: "POP",
+    length: window.history.length,
     block,
     createHref,
     go,
@@ -126,6 +154,7 @@ function getLocation(basename = "") {
   if (typeof historyState !== "object") {
     state = historyState;
   } else {
+    // 首次，key取state 里面的 key
     if (historyState && historyState.key) {
       location.key = historyState.key;
       state = historyState.state;
@@ -182,7 +211,6 @@ function getPretifyState(path, state, basename) {
 function createKey(keyLength) {
   return Math.random().toString(36).substr(2, keyLength);
 }
-
 
 /**
  * 

@@ -5,6 +5,6 @@ import App from './App';
 // import './react-router/browserHistory';
 // import './react-router/hashHistory';
 // import './react-router/memoryHistory';
-import './test';
+// import './test';
 
 ReactDOM.render(<App />, document.getElementById("root"));
